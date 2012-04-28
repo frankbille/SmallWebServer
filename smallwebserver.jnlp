@@ -11,16 +11,14 @@
 		<all-permissions />
 	</security>
 
-	<resources>
-		<j2se version="1.5+" />
-	</resources>
-
 	<resources os="Mac OS X" arch="x86">
 		<jar href="smallwebserver-cocoa-macosx-x86.jar" />
+		<j2se version="1.5+" java-vm-args="-XstartOnFirstThread" />
 	</resources>
 
 	<resources os="Mac OS X" arch="x86_64">
 		<jar href="smallwebserver-cocoa-macosx-x86_64.jar" />
+		<j2se version="1.5+" java-vm-args="-XstartOnFirstThread" />
 	</resources>
 
 	<application-desc main-class="dk.frankbille.smallwebserver.WebServerApplication" />
