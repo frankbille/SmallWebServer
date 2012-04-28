@@ -11,6 +11,19 @@
 		<swt.version>3.7.2</swt.version>
 	</properties>
 
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptorRefs>
+						<descriptorRef>jar-with-dependencies</descriptorRef>
+					</descriptorRefs>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
 	<repositories>
 		<repository>
 			<id>swt.github</id>
@@ -20,6 +33,7 @@
 
 	<profiles>
 		<profile>
+			<id>mac.x86</id>
 			<activation>
 				<os>
 					<family>mac</family>
@@ -35,6 +49,7 @@
 			</dependencies>
 		</profile>
 		<profile>
+			<id>mac.x64</id>
 			<activation>
 				<os>
 					<family>mac</family>

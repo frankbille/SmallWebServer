@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<jnlp spec="1.0+" codebase="https://frankbille.github.com/SmallWebServer" href="smallwebserver.jnlp">
+	<information>
+		<title>Small Web Server</title>
+		<vendor>Frank Bille</vendor>
+		<homepage href="https://frankbille.github.com/SmallWebServer" />
+		<description>Small HTTP Web Server that only serves static files.</description>
+	</information>
+
+	<security>
+		<all-permissions />
+	</security>
+
+	<resources>
+		<j2se version="1.5+" />
+	</resources>
+
+	<resources os="Mac OS X" arch="x86">
+		<jar href="smallwebserver-cocoa-macosx-x86.jar" />
+	</resources>
+
+	<resources os="Mac OS X" arch="x86_64">
+		<jar href="smallwebserver-cocoa-macosx-x86_64.jar" />
+	</resources>
+
+	<application-desc main-class="dk.frankbille.smallwebserver.WebServerApplication" />
+</jnlp>
