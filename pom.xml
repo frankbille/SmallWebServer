@@ -7,6 +7,50 @@
 	<packaging>jar</packaging>
 	<name>Small Web Server</name>
 
+	<properties>
+		<swt.version>3.7.2</swt.version>
+	</properties>
+
+	<repositories>
+		<repository>
+			<id>swt.github</id>
+			<url>https://raw.github.com/frankbille/SmallWebServer/maven</url>
+		</repository>
+	</repositories>
+
+	<profiles>
+		<profile>
+			<activation>
+				<os>
+					<family>mac</family>
+					<arch>x86</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.swt</groupId>
+					<artifactId>org.eclipse.swt.cocoa.macosx.x86</artifactId>
+					<version>${swt.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+		<profile>
+			<activation>
+				<os>
+					<family>mac</family>
+					<arch>x86_64</arch>
+				</os>
+			</activation>
+			<dependencies>
+				<dependency>
+					<groupId>org.eclipse.swt</groupId>
+					<artifactId>org.eclipse.swt.cocoa.macosx.x86_64</artifactId>
+					<version>${swt.version}</version>
+				</dependency>
+			</dependencies>
+		</profile>
+	</profiles>
+
 	<dependencies>
 		<dependency>
 			<groupId>org.mortbay.jetty</groupId>
