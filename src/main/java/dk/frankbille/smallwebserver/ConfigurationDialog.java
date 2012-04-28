@@ -1,21 +1,24 @@
 package dk.frankbille.smallwebserver;
 
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.events.ModifyEvent;
+import org.eclipse.swt.events.ModifyListener;
+import org.eclipse.swt.events.MouseEvent;
+import org.eclipse.swt.events.MouseTrackAdapter;
+import org.eclipse.swt.events.SelectionAdapter;
+import org.eclipse.swt.events.SelectionEvent;
+import org.eclipse.swt.graphics.Rectangle;
 import org.eclipse.swt.widgets.Button;
+import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
 import org.eclipse.swt.widgets.Text;
+import org.eclipse.wb.swt.SWTResourceManager;
 import org.eclipse.wb.swt.layout.grouplayout.GroupLayout;
 import org.eclipse.wb.swt.layout.grouplayout.LayoutStyle;
-import org.eclipse.wb.swt.SWTResourceManager;
-import org.eclipse.swt.events.SelectionAdapter;
-import org.eclipse.swt.events.SelectionEvent;
-import org.eclipse.swt.events.ModifyListener;
-import org.eclipse.swt.events.ModifyEvent;
-import org.eclipse.swt.events.MouseTrackAdapter;
-import org.eclipse.swt.events.MouseEvent;
 
 public class ConfigurationDialog extends Shell {
 
@@ -43,6 +46,15 @@ public class ConfigurationDialog extends Shell {
 	private void createContents() {
 		setText(Messages.getString("ConfigurationDialog.smallWebServer")); //$NON-NLS-1$
 		setSize(500, 175);
+
+		Monitor primary = getDisplay().getPrimaryMonitor();
+	    Rectangle bounds = primary.getBounds();
+	    Rectangle rect = getBounds();
+
+	    int x = bounds.x + (bounds.width - rect.width) / 2;
+	    int y = bounds.y + (bounds.height - rect.height) / 2;
+
+	    setLocation(x, y);
 
 		Label documentRootLabel = new Label(this, SWT.NONE);
 		documentRootLabel.setText(Messages.getString("ConfigurationDialog.documentRoot")); //$NON-NLS-1$
@@ -99,7 +111,31 @@ public class ConfigurationDialog extends Shell {
 		startStopButton.setText(Messages.getString("ConfigurationDialog.start")); //$NON-NLS-1$
 
 		showDocumentRootChooserButton = new Button(this, SWT.NONE);
+		showDocumentRootChooserButton.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				DirectoryDialog dialog = new DirectoryDialog(ConfigurationDialog.this);
+				dialog.setFilterPath(result.getDocumentRoot());
+				String documentRootPath = dialog.open();
+				documentRootField.setText(documentRootPath);
+			}
+		});
 		showDocumentRootChooserButton.setText("..."); //$NON-NLS-1$
+
+		Button btnQuit = new Button(this, SWT.NONE);
+		btnQuit.addSelectionListener(new SelectionAdapter() {
+			@Override
+			public void widgetSelected(SelectionEvent event) {
+				try {
+					result.stop();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+				System.exit(0);
+			}
+		});
+		btnQuit.setImage(SWTResourceManager.getImage(ConfigurationDialog.class, "/dk/frankbille/smallwebserver/door_in.png")); //$NON-NLS-1$
+		btnQuit.setText(Messages.getString("ConfigurationDialog.quit")); //$NON-NLS-1$
 		GroupLayout gl_shlSmallWebServer = new GroupLayout(this);
 		gl_shlSmallWebServer.setHorizontalGroup(
 			gl_shlSmallWebServer.createParallelGroup(GroupLayout.TRAILING)
@@ -113,11 +149,14 @@ public class ConfigurationDialog extends Shell {
 							.addPreferredGap(LayoutStyle.RELATED)
 							.add(gl_shlSmallWebServer.createParallelGroup(GroupLayout.TRAILING)
 								.add(gl_shlSmallWebServer.createSequentialGroup()
-									.add(documentRootField, GroupLayout.DEFAULT_SIZE, 234, Short.MAX_VALUE)
+									.add(documentRootField, GroupLayout.DEFAULT_SIZE, 334, Short.MAX_VALUE)
 									.addPreferredGap(LayoutStyle.RELATED)
 									.add(showDocumentRootChooserButton))
-								.add(portField, GroupLayout.DEFAULT_SIZE, 283, Short.MAX_VALUE)))
-						.add(GroupLayout.TRAILING, startStopButton))
+								.add(portField, GroupLayout.DEFAULT_SIZE, 383, Short.MAX_VALUE)))
+						.add(GroupLayout.TRAILING, gl_shlSmallWebServer.createSequentialGroup()
+							.add(btnQuit)
+							.addPreferredGap(LayoutStyle.RELATED, 296, Short.MAX_VALUE)
+							.add(startStopButton)))
 					.addContainerGap())
 		);
 		gl_shlSmallWebServer.setVerticalGroup(
@@ -132,8 +171,10 @@ public class ConfigurationDialog extends Shell {
 					.add(gl_shlSmallWebServer.createParallelGroup(GroupLayout.BASELINE)
 						.add(portLabel)
 						.add(portField, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))
-					.addPreferredGap(LayoutStyle.RELATED, 70, Short.MAX_VALUE)
-					.add(startStopButton)
+					.addPreferredGap(LayoutStyle.RELATED, 41, Short.MAX_VALUE)
+					.add(gl_shlSmallWebServer.createParallelGroup(GroupLayout.BASELINE)
+						.add(startStopButton)
+						.add(btnQuit))
 					.addContainerGap())
 		);
 		this.setLayout(gl_shlSmallWebServer);

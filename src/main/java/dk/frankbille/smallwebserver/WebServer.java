@@ -8,7 +8,7 @@ import org.mortbay.resource.FileResource;
 
 public class WebServer {
 
-	private String documentRoot = "/Users/frankbille/Desktop/DW";
+	private String documentRoot = System.getProperty("user.home");
 
 	private int port = 8888;
 
@@ -43,8 +43,10 @@ public class WebServer {
 	}
 
 	public void stop() throws Exception {
-		server.stop();
-		server = null;
+		if (isStarted()) {
+			server.stop();
+			server = null;
+		}
 	}
 
 }
