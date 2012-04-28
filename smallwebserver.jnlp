@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
-<jnlp spec="1.0+" codebase="https://frankbille.github.com/SmallWebServer" href="smallwebserver.jnlp">
+<jnlp spec="1.0+" codebase="http://frankbille.github.com/SmallWebServer" href="smallwebserver.jnlp">
 	<information>
 		<title>Small Web Server</title>
 		<vendor>Frank Bille</vendor>
-		<homepage href="https://frankbille.github.com/SmallWebServer" />
+		<homepage href="http://frankbille.github.com/SmallWebServer" />
 		<description>Small HTTP Web Server that only serves static files.</description>
 	</information>
 
