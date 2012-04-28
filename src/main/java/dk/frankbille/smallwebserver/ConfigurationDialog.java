@@ -12,6 +12,7 @@ import org.eclipse.swt.widgets.Button;
 import org.eclipse.swt.widgets.DirectoryDialog;
 import org.eclipse.swt.widgets.Display;
 import org.eclipse.swt.widgets.Label;
+import org.eclipse.swt.widgets.MessageBox;
 import org.eclipse.swt.widgets.Monitor;
 import org.eclipse.swt.widgets.Shell;
 import org.eclipse.swt.widgets.Spinner;
@@ -103,7 +104,9 @@ public class ConfigurationDialog extends Shell {
 						result.start();
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					MessageBox mb = new MessageBox(ConfigurationDialog.this, SWT.ICON_ERROR | SWT.OK);
+					mb.setMessage(e.getMessage());
+					mb.open();
 				}
 				updateComponents();
 			}
